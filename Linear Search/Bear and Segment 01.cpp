@@ -29,6 +29,7 @@ int main()
       }
     }
     // cout<<count<<endl;
+    if(count==0) cout<<"NO"<<endl;
     int val=1;
     for(int i=index; i<index+count; i++)
     {
