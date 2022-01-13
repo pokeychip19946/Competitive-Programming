@@ -29,7 +29,11 @@ int main()
       }
     }
     // cout<<count<<endl;
-    if(count==0) cout<<"NO"<<endl;
+    if(count==0) 
+    {  
+      cout<<"NO"<<endl; 
+      continue;
+    }
     int val=1;
     for(int i=index; i<index+count; i++)
     {
@@ -38,7 +42,7 @@ int main()
         val=0;
         break;
       }
-    }
+    } 
     if(val==1) cout<<"YES"<<endl;
     else cout<<"NO"<<endl;
   }
