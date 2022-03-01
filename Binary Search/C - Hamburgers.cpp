@@ -1,36 +1,89 @@
 #include <bits/stdc++.h>
 using namespace std;
-typedef long long ll;
-ll nb, ns, nc, pb, ps, pc;
-ll B=0, S=0, C=0;
-ll paise;
-bool good(ll x)
+#define int long long int
+
+bool check(int i, int b, int s, int c, int nb, int ns, int nc, int pb, int ps, int pc, int r)
 {
-    ll money=max(ll(0), B*x-nb)*pb+max(ll(0), S*x-ns)*ps+max(ll(0), C*x-nc)*pc;
-    if(money<=paise) return true;
-    return false;
+  nb=b*i-nb;
+  ns=s*i-ns;
+  nc=c*i-nc;
+
+  if(nb<0) nb=0;
+  if(ns<0) ns=0;
+  if(nc<0) nc=0;
+
+  pb*=nb;
+  ps*=ns;
+  pc*=nc;
+
+  int total=pb+ps+pc;
+  if(total<=r) return true;
+  
+  return false;
 }
-int main()
+main()
 {
-    ios_base::sync_with_stdio(false); cin.tie(NULL);
-    string s; cin>>s;
-    cin>>nb>>ns>>nc>>pb>>ps>>pc;
-    cin>>paise;
-    for (ll i = 0; i < s.size(); i++)
+  
+  string a;
+  cin>>a;
+  int b, s, c;
+  for(int i=0; i<a.size(); i++)
+  {
+    if(a[i]=='B') 
     {
-        if(s[i]=='B') B++;
-        else if(s[i]=='S') S++;
-        else if(s[i]=='C') C++;
+      b++;
+      continue;
     }
-    ll l=0; ll r=1e15+1;
-    while (l<r-1)
+    if(a[i]=='S') 
     {
-        ll x=(l+r)/2;
-        if(good(x))
-            l=x;
-        else
-            r=x;
+      s++;
+      continue;
     }
-    cout<<l<<"\n";
-    return 0;
+    if(a[i]== 'C') 
+    {
+      c++;
+      continue;
+    }
+  }
+
+  int nb, ns, nc;
+  cin>>nb>>ns>>nc;
+
+  int pb, ps, pc;
+  cin>>pb>>ps>>pc;
+
+  int r;
+  cin>>r;
+  int ans=0;
+  /*
+  linear search approach;
+  for(int i=0; i<1e14; i++)
+  {
+    if(check(i, b, s, c, nb, ns, nc, pb, ps, pc, r)==true)
+    {
+      ans=i;
+    }
+  }
+  cout<<ans<<endl;
+  */
+  
+  // binary search approach
+  int low=0; 
+  int high=1e14;
+  while(low<=high)
+  {
+    int mid=(low+high)/2;
+    if(check(mid, b, s, c, nb, ns, nc, pb, ps, pc, r)==true)
+    {
+      ans=mid;
+      low=mid+1;
+    }
+    else
+    {
+      high=mid-1;
+    }
+  }
+
+  cout<<ans<<endl;
+  return 0;
 }
